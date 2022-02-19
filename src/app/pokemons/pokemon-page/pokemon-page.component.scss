@@ -1,0 +1,15 @@
+.title {
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.active {
+  background-color: #d3502c;
+  color: white;
+}
+
+.btn-check:focus + .btn,
+.btn:focus {
+  box-shadow: none;
+}

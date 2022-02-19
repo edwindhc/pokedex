@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row py-2 d-flex align-items-center">
+        <div class="col-8 col-sm-9">
+            <h1 class="title my-0">Pokedex</h1>
+        </div>
+        <div class="col-4 col-sm-3 d-none d-sm-flex justify-content-end">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button [ngClass]="{ 'active' : view === 'grid' }" (click)="changeView('grid')" type="button" class="btn btn-light"><i class="bi bi-grid-3x3-gap-fill"></i></button>
+                <button [ngClass]="{ 'active' : view === 'list' }" (click)="changeView('list')" type="button" class="btn btn-light"><i class="bi bi-list"></i></button>
+                <button [ngClass]="{ 'active' : view === 'slider' }" (click)="changeView('slider')" type="button" class="btn btn-light"><i class="bi bi-sliders"></i></button>
+              </div>
+        </div>
+    </div>
+  </div>
+  
