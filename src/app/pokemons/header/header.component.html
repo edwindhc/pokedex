@@ -1,0 +1,18 @@
+<div class="input-group">
+  <input
+    class="form-control py-2 border-right-0 border"
+    type="text"
+    placeholder="Buscar Pokemon"
+    (keyup.enter)="search()"
+    #textSearch
+  />
+  <span class="input-group-append">
+    <button
+      class="btn btn-outline-secondary border-left-0 border search-button"
+      (click)="clearSearch()"
+      type="button"
+    >
+      <i class="bi bi-x"></i>
+    </button>
+  </span>
+</div>

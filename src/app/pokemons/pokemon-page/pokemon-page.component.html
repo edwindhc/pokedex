@@ -1,15 +1,178 @@
 <div class="container">
-    <div class="row py-2 d-flex align-items-center">
-        <div class="col-8 col-sm-9">
-            <h1 class="title my-0">Pokedex</h1>
-        </div>
-        <div class="col-4 col-sm-3 d-none d-sm-flex justify-content-end">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button [ngClass]="{ 'active' : view === 'grid' }" (click)="changeView('grid')" type="button" class="btn btn-light"><i class="bi bi-grid-3x3-gap-fill"></i></button>
-                <button [ngClass]="{ 'active' : view === 'list' }" (click)="changeView('list')" type="button" class="btn btn-light"><i class="bi bi-list"></i></button>
-                <button [ngClass]="{ 'active' : view === 'slider' }" (click)="changeView('slider')" type="button" class="btn btn-light"><i class="bi bi-sliders"></i></button>
-              </div>
-        </div>
+  <div class="row py-2 d-flex align-items-center">
+    <div class="col-12 col-sm-9">
+      <h1 class="title my-0">Pokedex</h1>
+    </div>
+    <div class="col-12 col-sm-4 mt-2">
+      <app-header></app-header>
+    </div>
+    <div class="col-sm-8 d-none d-sm-flex justify-content-end">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button
+          [ngClass]="{ active: view === 'grid' }"
+          (click)="changeView('grid')"
+          type="button"
+          class="btn btn-light"
+        >
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+        </button>
+        <button
+          [ngClass]="{ active: view === 'list' }"
+          (click)="changeView('list')"
+          type="button"
+          class="btn btn-light"
+        >
+          <i class="bi bi-list"></i>
+        </button>
+        <button
+          [ngClass]="{ active: view === 'slider' }"
+          (click)="changeView('slider')"
+          type="button"
+          class="btn btn-light"
+        >
+          <i class="bi bi-sliders"></i>
+        </button>
+      </div>
     </div>
   </div>
-  
+  <div *ngIf="view === 'grid'" class="row mt-4" @changeViewState>
+    <div class="col-lg-4 col-12" *ngFor="let pokemon of getPokemonsList">
+      <div class="card mb-4" @initState (click)="handleClickCard(pokemon)">
+        <div class="card-body">
+          <div class="row d-flex justify-align-center">
+            <div class="col-7 col-sm-8">
+              <h3 class="card-title">{{ pokemon.name | titlecase }}</h3>
+              <div class="row">
+                <div class="col-8 d-flex justify-content-between">
+                  <span
+                    class="badge {{ type.type.name }}"
+                    *ngFor="let type of pokemon.types"
+                  >
+                    {{ type.type.name | titlecase }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-5 col-sm-4">
+              <img
+                src="{{ pokemon.sprites.front_default }}"
+                class="img-fluid"
+                alt="{{ pokemon.name }}"
+              />
+            </div>
+            <div
+              *ngIf="pokemon.name !== pokemon.evolutionFrom; else elseBlock"
+              class="col-12"
+            >
+              Evolucionó de {{ pokemon.evolutionFrom | titlecase }}
+            </div>
+            <ng-template #elseBlock class="col-12"
+              >Sin evolución anterior</ng-template
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="view === 'list'" class="row mt-4" @changeViewState>
+    <div class="col-lg-12 col-12" *ngFor="let pokemon of getPokemonsList">
+      <div class="card mb-4" (click)="handleClickCard(pokemon)">
+        <div class="card-body">
+          <div class="row d-flex justify-align-center">
+            <div class="col-7 col-sm-8">
+              <h3 class="card-title">{{ pokemon.name | titlecase }}</h3>
+              <div class="row">
+                <div class="col-8 col-sm-4 d-flex justify-content-between">
+                  <span
+                    class="badge {{ type.type.name }}"
+                    *ngFor="let type of pokemon.types"
+                  >
+                    {{ type.type.name | titlecase }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-5 col-sm-4">
+              <ngb-carousel
+                [interval]="2500 + pokemon.id * 10"
+                [showNavigationArrows]="false"
+              >
+                <ng-template
+                  ngbSlide
+                  *ngFor="let img of getImages(pokemon.sprites); index as i"
+                >
+                  <div class="picsum-img-wrapper text-center">
+                    <img [src]="img" alt="pokemon {{ pokemon.name }}" />
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+            </div>
+            <div
+              *ngIf="pokemon.name !== pokemon.evolutionFrom; else elseBlock"
+              class="col-12"
+            >
+              Evolucionó de {{ pokemon.evolutionFrom | titlecase }}
+            </div>
+            <ng-template #elseBlock class="col-12"
+              >Sin evolución anterior</ng-template
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="view === 'slider'" @changeViewState>
+  <div class="row d-flex justify-content-center mt-4">
+    <div class="col-6 slider">
+      <ngb-carousel
+        class="carousel"
+        [interval]="2500"
+        [showNavigationArrows]="true"
+      >
+        <ng-template ngbSlide *ngFor="let pokemon of getPokemonsList">
+          <div
+            class="picsum-img-wrapper text-center pointer"
+            (click)="handleClickCard(pokemon)"
+          >
+            <h4>{{ pokemon.name | titlecase }}</h4>
+            <img
+              [src]="pokemon.sprites.front_default"
+              alt="pokemon {{ pokemon.name }}"
+            />
+            <div class="row">
+              <div class="d-flex justify-content-center">
+                <div class="col-4 d-flex justify-content-between">
+                  <span
+                    class="badge {{ type.type.name }}"
+                    *ngFor="let type of pokemon.types"
+                  >
+                    {{ type.type.name | titlecase }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-12 text-center">
+                <div
+                  *ngIf="pokemon.name !== pokemon.evolutionFrom; else elseBlock"
+                  class="col-12"
+                >
+                  Evolucionó de {{ pokemon.evolutionFrom | titlecase }}
+                </div>
+                <ng-template #elseBlock class="col-12"
+                  >Sin evolución anterior</ng-template
+                >
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+  </div>
+</div>
+
+<app-dialog
+  [(visible)]="showDialog"
+  [pokemonSelected]="pokemonSelected"
+></app-dialog>

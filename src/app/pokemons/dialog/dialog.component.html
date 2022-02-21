@@ -1,0 +1,78 @@
+<div [@myModal] class="myModal" *ngIf="visible" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content {{pokemonSelected.types?.[0]?.type?.name}}">
+      <div class="modal-header">
+        <h4 class="modal-title text-white">
+          {{ pokemonSelected.name | titlecase }}
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="species">
+          <span class="badge mx-1" *ngFor="let type of pokemonSelected.types">
+            {{ type.type?.name | titlecase }}
+          </span>
+        </div>
+        <div class="row">
+          <h4 class="text-white text-center mt-2 mb-0">Cadena de Evolución</h4>
+        </div>
+        <div class="evo-chain d-flex justify-content-around mt-4">
+          <div *ngFor="let evo of pokemonSelected.evolutionChain">
+            <div
+              class="card"
+              [routerLink]="['/pokemon', evo.name]"
+              [ngClass]="{ active: evo.name === pokemonSelected.name }"
+            >
+              <div class="card-body">
+                <img [src]="getImageByUrl(evo.url)" class="img-fluid" />
+                <h5 class="text-center">{{ evo.name | titlecase }}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-around text-white my-3">
+          <div class="height">Altura: {{ pokemonSelected.height }}</div>
+          <div class="height">Peso: {{ pokemonSelected.weight }}</div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <ul class="list-group mt-4" style="width: 20rem">
+              <li class="list-group-item bg-transparent text-white">
+                Experiencia
+                <b class="float-end">{{ pokemonSelected.base_experience }}</b>
+              </li>
+              <li class="list-group-item bg-transparent text-white">
+                Tamaño <b class="float-end">{{ pokemonSelected.height }}</b>
+              </li>
+              <li class="list-group-item bg-transparent text-white">
+                Peso <b class="float-end">{{ pokemonSelected.weight }}</b>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-sm-6">
+            <ul class="list-group mt-4" style="width: 20rem">
+              <li class="list-group-item bg-transparent text-white">
+                <b>Habilidades</b>
+              </li>
+              <li
+                class="list-group-item bg-transparent text-white"
+                *ngFor="let ability of pokemonSelected.abilities"
+              >
+                {{ ability.ability.name | titlecase }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="close()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

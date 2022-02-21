@@ -1,0 +1,16 @@
+.active{
+    transform: scale(1.05);
+    transition: all 1s ease;
+  -webkit-transition-delay: 0.25s;
+  transition-delay: 0.25s;
+ box-shadow: 0 10px 20px rgba(0,0,0,.35), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.bi-arrow-left-circle{
+    font-size: 30px;
+    color: white;
+}

@@ -4,6 +4,7 @@
   text-transform: uppercase;
 }
 
+
 .active {
   background-color: #d3502c;
   color: white;
@@ -12,4 +13,55 @@
 .btn-check:focus + .btn,
 .btn:focus {
   box-shadow: none;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.card{
+    transition: all .5s ease;
+    cursor: pointer;
+    &:hover{
+        transform: scale(1.05);
+        transition: all 1s ease;
+      -webkit-transition-delay: 0.25s;
+      transition-delay: 0.25s;
+     box-shadow: 0 10px 20px rgba(0,0,0,.35), 0 4px 8px rgba(0,0,0,.06);
+    }
+}
+
+.bug{ background-color: #479A51; }
+.dark{ background-color: #939496; }
+.dragon{ background-color: #62cad9; }
+.electric{ background-color: #ABADA3; }
+.fairy{ background-color: #eb4f69; }
+.fighting { background-color: #ef6239; }
+.fire{ background-color: #ef4e58; }
+.flying{ background-color: #94B2C7; }
+.ghost{ background-color: #906791; }
+.grass{ background-color: #63cc52; }
+.ground{ background-color: #6E491F; }
+.ice { background-color: #86d2f5; }
+.normal { background-color: #75525C; }
+.poison{ background-color: #9B69DA; }
+.psychic{ background-color: #EE5991; }
+.rock{ background-color: #48190b; }
+.steel {background-color: #60756E; }
+.water {background-color: #7298f4; }
+
+.slider{
+  background-color: dimgrey;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  .carousel{
+    width: 100%;
+    text-align: center;
+  }
 }

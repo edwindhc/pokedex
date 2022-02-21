@@ -1,0 +1,79 @@
+<div class="container" *ngIf="pokemon">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="mt-2">
+            <h1 class="text-white text-center">{{ pokemon.name | titlecase }}</h1>
+            <span
+              *ngFor="let type of pokemon.types"
+              class="badge border rounded-pill me-1"
+            >
+              {{ type.type?.name | titlecase }}
+            </span>
+          </div>
+          <h4 class="text-white text-center mt-2 mb-0">Cadena de Evolución</h4>
+          <div class="evo-chain d-flex justify-content-around mt-4">
+            <div *ngFor="let evo of pokemon.evolutionChain">
+              <div
+                class="card pointer"
+                [routerLink]="['/pokemon', evo.name]"
+                [ngClass]="{ active: evo.name === pokemon.name }"
+              >
+                <div class="card-body">
+                  <img [src]="getImageByUrl(evo.url)" class="img-fluid" />
+                  <h5 class="text-center">{{ evo.name | titlecase }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <ul class="list-group mt-4" style="width: 20rem">
+              <li class="list-group-item bg-transparent text-white">
+                Experiencia
+                <b class="float-end">{{ pokemon.base_experience }}</b>
+              </li>
+              <li class="list-group-item bg-transparent text-white">
+                Tamaño <b class="float-end">{{ pokemon.height }}</b>
+              </li>
+              <li class="list-group-item bg-transparent text-white">
+                Peso <b class="float-end">{{ pokemon.weight }}</b>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-sm-6">
+            <ul class="list-group mt-4" style="width: 20rem">
+              <li class="list-group-item bg-transparent text-white">
+                <b>Habilidades</b>
+              </li>
+              <li
+                class="list-group-item bg-transparent text-white"
+                *ngFor="let ability of pokemon.abilities"
+              >
+                {{ ability.ability.name | titlecase }}
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-sm-6">
+            <ul class="list-group mt-4" style="width: 20rem">
+              <li class="list-group-item bg-transparent text-white">
+                <b>Estadísticas</b>
+              </li>
+              <li
+                class="list-group-item bg-transparent text-white"
+                *ngFor="let stat of pokemon.stats"
+              >
+                {{ stat.stat?.name | titlecase }} <b class="float-end">{{ stat.base_stat }}</b>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="position-absolute top-0 start-0">
+    <button class="btn" [routerLink]="['/']"><i class="bi bi-arrow-left-circle"></i></button>
+</div>
